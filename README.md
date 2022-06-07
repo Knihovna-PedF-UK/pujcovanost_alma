@@ -8,4 +8,4 @@ signatury jednotky)".
 
 Použití:
 
-
+    texlua almapujcovanost.lua vypujcky.xml seznam_jednotek.xml > vysledek.tsv
