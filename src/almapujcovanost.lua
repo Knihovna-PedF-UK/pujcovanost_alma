@@ -37,13 +37,13 @@ end)
 local seznam_mapping = {
 		C0 = "lokace",
 		C1 = "signatura",
-		C2 = "ck",
-		C3 = "typ_dokumentu",
-		C4 = "status",
-		C9 = "mms",
-		C10 = "autor",
-		C11 = "nazev", 
-		C12 = "rok",
+		C3 = "ck",
+		C4 = "typ_dokumentu",
+		C11 = "status",
+		C12 = "mms",
+		C13 = "autor",
+		C14 = "nazev", 
+		C15 = "rok",
 
 }
 
