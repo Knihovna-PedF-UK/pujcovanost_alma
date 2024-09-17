@@ -8,4 +8,8 @@ signatury jednotky)".
 
 Použití:
 
-    texlua almapujcovanost.lua vypujcky.xml seznam_jednotek.xml > vysledek.tsv
+    $ texlua src/almapujcovanost.lua vypujcky.xml seznam_jednotek.xml > vysledek.tsv
+
+Pro použití s půjčovaností titulů můžem vygenerovat z "Výpůjčky dle knihoven za konkrétní období - tituly" a pak: 
+
+    $ texlua src/almatitulypujcovanost.lua vypujcky.xml seznam_jednotek.xml > vysledek.tsv
