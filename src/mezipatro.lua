@@ -1,17 +1,18 @@
 kpse.set_program_name "luatex"
 local xml = require "src.almaxmlhandler"
--- pouziti: mezipatro.lua vypujcky.xml
+-- pouziti: mezipatro.lua vypujcky.xml sigantury_rekonstrukce.txt
 -- počítáme  jednotky v mezipatře
 local vypujcky_file = arg[1]
+local signatury_rekonstrukce_file = arg[2]
 
 local function help()
   print "Chyba: nepodařilo se nahrát soubory"
   print("výpůjčky: " .. (vypujcky_file or ""))
-  print "pouziti: texlua almapujcovanost.lua vypujcky.xml seznam_jednotek.xml"
+  print "pouziti: texlua almapujcovanost.lua vypujcky.xml seznam_jednotek.xml signatury_rekonstrukce.txt"
   os.exit()
 end
 
-if not vypujcky_file then
+if not vypujcky_file or not signatury_rekonstrukce_file then
   help()
 end
 
@@ -21,8 +22,14 @@ if not vypujcky_text then
   help()
 end
 
+local signatury_rekonstrukce = {}
+for line in io.lines(signatury_rekonstrukce_file) do
+  signatury_rekonstrukce[line] = true
+end
+
 local vypujcky_mapping = {
   C1 = "signatura",
+  C16 = "proces"
 }
 
 local prefixy = {
@@ -33,8 +40,22 @@ local prefixy = {
 }
 local count = 0
 
+local processes = {}
+local ignore_process = {
+  ["In Process"] = true,
+  ["Transit"] = true,
+}
+
 xml.process(vypujcky_text, vypujcky_mapping, function(tbl)
   local signatura = tbl.signatura
+  local process   = tbl.proces
+  if signatura and signatury_rekonstrukce[signatura] then
+    return
+  end
+  if ignore_process[process] then
+    return 
+  end
+  processes[process] = true
   if signatura then
     local prefix = signatura:match("^(%d?%a+)")
     local cislo   = signatura:match("(%d+)")
@@ -65,3 +86,6 @@ for prefix, rule in pairs(prefixy) do
 end
 
 print("Celkem: " .. count)
+for k, _ in pairs(processes) do
+  print("Proces: " .. k)
+end
