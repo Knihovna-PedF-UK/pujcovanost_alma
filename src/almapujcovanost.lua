@@ -24,8 +24,8 @@ if not vypujcky_text or not seznam_text then
 end
 
 local vypujcky_mapping = {
-  C0 = "vypujcky",
-  C3 = "ck"
+  C2 = "vypujcky",
+  C0 = "ck"
 }
 
 -- nahrat pocty vypujcek pro ck
@@ -73,6 +73,7 @@ print_line(heading)
 xml.process(seznam_text, seznam_mapping, function(tbl)
   -- nastavit pocet vypujcek
   tbl.pocet_vypujcek = vypujcky_data[tbl.ck] or 0
+  -- print(tbl.ck, vypujcky_data[tbl.ck])
   local signatura = tbl.signatura or ""
   tbl.typ_signatury, tbl.poradi_signatury = signatura:match("^([0-9]?[A-Za-z%-]+)([0-9]+)")
   local line = {}
